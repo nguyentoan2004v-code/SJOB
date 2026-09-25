@@ -196,11 +196,17 @@ $$\text{StartA} < \text{EndB} \quad \text{và} \quad \text{EndA} > \text{StartB}
 - [x] Trang Tài khoản & Thống kê Thu nhập Toàn diện (Dedicated Account & Revenue Analytics Page): Màn hình riêng biệt `AccountPage.tsx` thay thế bottom sheet cũ, xem toàn bộ thống kê doanh thu (Toàn thời gian / Tháng này / Tháng trước), 4 chỉ số tài chính cốt lõi, biểu đồ doanh thu theo từng tháng có thanh tiến trình trực quan, bảng xếp hạng Top 5 công việc thu nhập cao nhất, xuất sao lưu JSON và chỉnh sửa tên cá nhân (hỗ trợ 100% người dùng chưa đăng nhập).
 - [x] Frontend `npm run build` thành công 100% (Turbopack, TypeScript 0 lỗi).
 
-### ⏳ Phase 5: Tối ưu & Đóng gói (Tiếp theo)
-- [x] Cấu hình PWA (manifest.json, manifest.ts, icons, service worker) để cài đặt ra màn hình chính điện thoại (Add to Home Screen).
-- [x] Viết bộ test Vitest tự động kiểm tra logic overlap (Backend & Frontend) và thuật toán tính toán chỉ tiêu tháng.
+### 🚀 Phase 6: Triển Khai Thực Tế 100% Miễn Phí (0 VNĐ/tháng)
+- [x] **Cơ sở dữ liệu Cloud**: Khởi tạo cụm TiDB Serverless (MySQL 8 tương thích, AWS Singapore, 25GB dung lượng vĩnh viễn), đồng bộ Prisma schema thành công qua `npx prisma db push`.
+- [x] **Backend API NestJS (Render.com)**:
+  - Dịch vụ Web Service `sjob-api` đã triển khai thành công và báo trạng thái **Live**.
+  - Production URL: `https://sjob-api.onrender.com`
+  - Đã tích hợp CORS cho phép Vercel, kiểm tra endpoint trả lời mã lỗi auth 401 chuẩn xác.
+- [ ] **Frontend UI Next.js PWA (Vercel)**: Chuẩn bị import repository GitHub lên Vercel Hobby Tier, cấu hình `NEXT_PUBLIC_API_URL=https://sjob-api.onrender.com/api`.
+- [ ] **Kiểm thử thiết bị di động thực tế**: Cài đặt PWA lên màn hình chính, kiểm tra luồng Guest Mode và Google Sync.
 
 ---
+
 
 ## 8. Hướng dẫn chạy dự án
 
@@ -413,6 +419,11 @@ npm run dev:frontend
       + Cấu hình [backend/tsconfig.build.json](file:///d:/SJob/backend/tsconfig.build.json) chỉ nạp kiểu `["node"]` và `skipLibCheck: true`.
       + Đã kiểm tra build thành công và đẩy commit mới lên GitHub `main`.
     - Files thay đổi: `backend/src/main.ts`, `backend/tsconfig.build.json`, `backend/package.json`, `SKILL.md`.
+  - Triển Khai Backend NestJS Lên Render.com Thành Công (Status Live):
+    - Dịch vụ Web Service `sjob-api` đã hoạt động chính thức tại: `https://sjob-api.onrender.com`.
+    - Kết nối Cloud MySQL TiDB Serverless ổn định qua cổng SSL 4000.
+    - Đã xác thực thành công các endpoint API hoạt động chuẩn xác với JSON response và CORS.
+
 
 
 
