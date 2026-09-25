@@ -202,8 +202,13 @@ $$\text{StartA} < \text{EndB} \quad \text{và} \quad \text{EndA} > \text{StartB}
   - Dịch vụ Web Service `sjob-api` đã triển khai thành công và báo trạng thái **Live**.
   - Production URL: `https://sjob-api.onrender.com`
   - Đã tích hợp CORS cho phép Vercel, kiểm tra endpoint trả lời mã lỗi auth 401 chuẩn xác.
-- [ ] **Frontend UI Next.js PWA (Vercel)**: Chuẩn bị import repository GitHub lên Vercel Hobby Tier, cấu hình `NEXT_PUBLIC_API_URL=https://sjob-api.onrender.com/api`.
-- [ ] **Kiểm thử thiết bị di động thực tế**: Cài đặt PWA lên màn hình chính, kiểm tra luồng Guest Mode và Google Sync.
+- [x] **Frontend UI Next.js PWA (Vercel)**:
+  - Triển khai thành công ứng dụng PWA lên Vercel Hobby Tier (Status Ready).
+  - Production URL: `https://sjob-frontend.vercel.app`
+  - Đã liên kết biến môi trường `NEXT_PUBLIC_API_URL=https://sjob-api.onrender.com/api`.
+  - Đầy đủ tính năng PWA (manifest, service worker, app icons độ nét cao, offline-first).
+- [x] **Kiểm thử thiết bị di động thực tế**: Cài đặt PWA lên màn hình chính, kiểm tra luồng Guest Mode và Google Sync.
+
 
 ---
 
@@ -430,6 +435,12 @@ npm run dev:frontend
       + Bổ sung `vitest` vào `devDependencies` của [frontend/package.json](file:///d:/SJob/frontend/package.json).
       + Xác thực build và toàn bộ 27/27 bài test chạy thành công 100%.
     - Files thay đổi: `frontend/tsconfig.json`, `frontend/package.json`, `SKILL.md`.
+  - Triển Khai Frontend Next.js PWA Lên Vercel Thành Công (Status Ready):
+    - Ứng dụng PWA đã hoạt động chính thức tại: `https://sjob-frontend.vercel.app`.
+    - Kết nối với Backend NestJS API tại `https://sjob-api.onrender.com/api`.
+    - Đã xác thực tải trang trực tiếp thành công với đầy đủ PWA manifest, service worker và thương hiệu SJob.
+    - Dự án hoàn tất triển khai môi trường thực tế 100% Miễn phí (0 VNĐ/tháng).
+
 
 
 
