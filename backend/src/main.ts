@@ -11,7 +11,10 @@ async function bootstrap() {
     : ['http://localhost:3000'];
 
   app.enableCors({
-    origin: (origin, callback) => {
+    origin: (
+      origin: string | undefined,
+      callback: (err: Error | null, allow?: boolean) => void,
+    ) => {
       // Cho phép request không có origin (như curl, mobile app) hoặc khớp danh sách / vercel.app
       if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
         callback(null, true);
