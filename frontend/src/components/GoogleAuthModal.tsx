@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useJobs } from '../context/JobContext';
 import { X, Cloud, Smartphone, Sparkles, Loader2 } from 'lucide-react';
 
@@ -27,39 +27,57 @@ export const GoogleAuthModal: React.FC = () => {
   const { isGoogleModalOpen, closeGoogleModal, loginWithGoogle } = useJobs();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSdkLoaded, setIsSdkLoaded] = useState<boolean>(false);
+  const btnSlotRef = useRef<HTMLDivElement>(null);
 
+  // 1. Tải Google GSI Script an toàn vào document.head khi modal mở
   useEffect(() => {
     if (!isGoogleModalOpen) return;
 
-    let retryCount = 0;
-    const maxRetries = 25; // 25 * 200ms = 5s
+    const SCRIPT_ID = 'google-gsi-client-script';
+    let scriptTag = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
 
-    const setupGoogle = () => {
-      if (typeof window !== 'undefined' && window.google?.accounts?.id) {
-        setIsSdkLoaded(true);
+    if (!scriptTag) {
+      scriptTag = document.createElement('script');
+      scriptTag.id = SCRIPT_ID;
+      scriptTag.src = 'https://accounts.google.com/gsi/client';
+      scriptTag.async = true;
+      scriptTag.defer = true;
+      scriptTag.onload = () => setIsSdkLoaded(true);
+      document.head.appendChild(scriptTag);
+    } else if (window.google?.accounts?.id) {
+      setIsSdkLoaded(true);
+    }
+  }, [isGoogleModalOpen]);
 
-        // Initialize Google Identity Services
-        window.google.accounts.id.initialize({
-          client_id: GOOGLE_CLIENT_ID,
-          callback: async (response: { credential?: string }) => {
-            if (response.credential) {
-              setIsSubmitting(true);
-              try {
-                await loginWithGoogle(response.credential);
-              } finally {
-                setIsSubmitting(false);
+  // 2. Khởi tạo và render nút Google khi SDK và container đã sẵn sàng
+  useEffect(() => {
+    if (!isGoogleModalOpen || !isSdkLoaded) return;
+
+    let timer: NodeJS.Timeout | null = null;
+
+    const initAndRender = () => {
+      if (typeof window !== 'undefined' && window.google?.accounts?.id && btnSlotRef.current) {
+        try {
+          window.google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: async (response: { credential?: string }) => {
+              if (response.credential) {
+                setIsSubmitting(true);
+                try {
+                  await loginWithGoogle(response.credential);
+                } finally {
+                  setIsSubmitting(false);
+                }
               }
-            }
-          },
-          auto_select: false,
-          cancel_on_tap_outside: true,
-        });
+            },
+            auto_select: false,
+            cancel_on_tap_outside: true,
+          });
 
-        // Render official Google button
-        const slot = document.getElementById('google-btn-slot');
-        if (slot) {
-          slot.innerHTML = '';
-          window.google.accounts.id.renderButton(slot, {
+          // Xóa nội dung cũ trong ref nếu có trước khi render
+          btnSlotRef.current.innerHTML = '';
+
+          window.google.accounts.id.renderButton(btnSlotRef.current, {
             theme: 'filled_blue',
             size: 'large',
             shape: 'pill',
@@ -67,23 +85,25 @@ export const GoogleAuthModal: React.FC = () => {
             width: 270,
             logo_alignment: 'left',
           });
-        }
 
-        // Trigger One Tap if supported
-        try {
-          window.google.accounts.id.prompt();
-        } catch {
-          // Ignore One Tap suppression
+          // Gọi One Tap nếu trình duyệt hỗ trợ
+          try {
+            window.google.accounts.id.prompt();
+          } catch {
+            // Ignore One Tap suppression
+          }
+        } catch (err) {
+          console.error('Google GSI initialization error:', err);
         }
-      } else if (retryCount < maxRetries) {
-        retryCount++;
-        setTimeout(setupGoogle, 200);
+      } else {
+        timer = setTimeout(initAndRender, 150);
       }
     };
 
-    setupGoogle();
+    initAndRender();
 
     return () => {
+      if (timer) clearTimeout(timer);
       if (typeof window !== 'undefined' && window.google?.accounts?.id) {
         try {
           window.google.accounts.id.cancel();
@@ -92,7 +112,7 @@ export const GoogleAuthModal: React.FC = () => {
         }
       }
     };
-  }, [isGoogleModalOpen, loginWithGoogle]);
+  }, [isGoogleModalOpen, isSdkLoaded, loginWithGoogle]);
 
   if (!isGoogleModalOpen) return null;
 
@@ -141,7 +161,7 @@ export const GoogleAuthModal: React.FC = () => {
           Đăng nhập hoặc tạo tài khoản SJob mới bằng tài khoản Gmail của bạn để lưu trữ đám mây an toàn.
         </div>
 
-        {/* Benefits list */}
+        {/* Danh sách lợi ích */}
         <div className="google-benefits-box">
           <div className="google-benefit-item">
             <Cloud size={16} className="benefit-icon" />
@@ -157,7 +177,7 @@ export const GoogleAuthModal: React.FC = () => {
           </div>
         </div>
 
-        {/* Google Render Slot */}
+        {/* Khung chứa nút Google độc lập không bị React xung đột DOM */}
         <div className="google-btn-wrapper">
           {isSubmitting ? (
             <div className="google-btn-loading">
@@ -165,14 +185,20 @@ export const GoogleAuthModal: React.FC = () => {
               <span>Đang kết nối tài khoản Google...</span>
             </div>
           ) : (
-            <div id="google-btn-slot" className="google-btn-slot">
+            <>
               {!isSdkLoaded && (
                 <div className="google-btn-loading">
                   <Loader2 size={16} className="spin-animate" />
                   <span>Đang tải nút Google...</span>
                 </div>
               )}
-            </div>
+              {/* Ref container trống hoàn toàn - không chứa con của React */}
+              <div
+                ref={btnSlotRef}
+                className="google-btn-slot"
+                style={{ display: isSdkLoaded ? 'flex' : 'none' }}
+              />
+            </>
           )}
         </div>
 

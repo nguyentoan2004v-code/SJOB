@@ -441,8 +441,15 @@ npm run dev:frontend
     - Xây dựng component `GoogleAuthModal.tsx` hiển thị giao diện đăng nhập Google Cloud sang trọng, render nút Google chính thức và kích hoạt Google One Tap.
     - Cập nhật `Header.tsx` và `AccountSheet.tsx` mở GoogleAuthModal thay cho luồng mock cũ.
     - Cấu hình Backend `AuthService` xác thực token với audience Google Client ID chính thức.
-    - Build thành công 100% không có lỗi.
     - Files thay đổi: `backend/src/auth/auth.service.ts`, `frontend/src/app/layout.tsx`, `frontend/src/app/page.tsx`, `frontend/src/app/globals.css`, `frontend/src/components/GoogleAuthModal.tsx`, `frontend/src/components/Header.tsx`, `frontend/src/components/AccountSheet.tsx`, `frontend/src/context/JobContext.tsx`, `SKILL.md`.
+  - Khắc Phục Lỗi React removeChild DOM Collision Khi Render Nút Google:
+    - **Nguyên nhân**: Khi đặt `<Script>` trong `<body>` của `layout.tsx` và để React render text bên trong container chứa nút Google `GoogleAuthModal`, Google SDK chèn iframe vào DOM khiến React bị xung đột hydration (`Failed to execute 'removeChild' on 'Node'`).
+    - **Khắc phục**:
+      + Xóa thẻ `<Script>` trực tiếp khỏi `<body>` trong [layout.tsx](file:///d:/SJob/frontend/src/app/layout.tsx).
+      + Sử dụng cơ chế nạp động Google GSI Script an toàn vào `document.head` trong [GoogleAuthModal.tsx](file:///d:/SJob/frontend/src/components/GoogleAuthModal.tsx).
+      + Sử dụng `useRef` cho container nút Google với cấu trúc rỗng hoàn toàn, không có React children để React không can thiệp vào iframe của Google.
+    - Files thay đổi: `frontend/src/app/layout.tsx`, `frontend/src/components/GoogleAuthModal.tsx`, `SKILL.md`.
+
 
 
 
