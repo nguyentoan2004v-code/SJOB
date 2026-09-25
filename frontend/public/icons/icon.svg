@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient for App Icon -->
+    <linearGradient id="appBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#090d16"/>
+    </linearGradient>
+
+    <!-- Neon Indigo & Emerald Gradient -->
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="60%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Squircle App Background -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#appBg)" stroke="rgba(99, 102, 241, 0.25)" stroke-width="4"/>
+
+  <!-- Logo Group -->
+  <g transform="translate(0, 0)">
+    <!-- Hexagon Outer Boundary -->
+    <path d="M 256 58 
+             L 426 156 
+             L 426 352 
+             L 256 450 
+             L 86 352 
+             L 86 156 Z" 
+          fill="none" 
+          stroke="url(#logoGrad)" 
+          stroke-width="26" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+
+    <!-- Calendar Body Outline -->
+    <rect x="166" y="164" width="180" height="170" rx="30" 
+          fill="none" 
+          stroke="url(#logoGrad)" 
+          stroke-width="22" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+
+    <!-- Calendar Top Binder Clips -->
+    <line x1="216" y1="138" x2="216" y2="188" 
+          stroke="url(#logoGrad)" stroke-width="20" stroke-linecap="round"/>
+    <line x1="296" y1="138" x2="296" y2="188" 
+          stroke="url(#logoGrad)" stroke-width="20" stroke-linecap="round"/>
+
+    <!-- Calendar Horizontal Divider Line -->
+    <line x1="172" y1="216" x2="340" y2="216" 
+          stroke="url(#logoGrad)" stroke-width="18" stroke-linecap="round"/>
+
+    <!-- Checkmark Inside Calendar -->
+    <path d="M 214 274 L 248 308 L 302 248" 
+          fill="none" 
+          stroke="url(#logoGrad)" 
+          stroke-width="24" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: sjob-api
+    env: node
+    plan: free
+    region: singapore
+    buildCommand: npm install && npx prisma generate && npm run build --workspace=backend
+    startCommand: node backend/dist/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false

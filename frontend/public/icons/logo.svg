@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 620" width="512" height="620">
+  <defs>
+    <linearGradient id="logoEmblemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hexagon Outer Boundary -->
+  <path d="M 256 36 
+           L 444 144 
+           L 444 362 
+           L 256 470 
+           L 68 362 
+           L 68 144 Z" 
+        fill="none" 
+        stroke="url(#logoEmblemGrad)" 
+        stroke-width="28" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+
+  <!-- Calendar Body Outline -->
+  <rect x="156" y="152" width="200" height="188" rx="32" 
+        fill="none" 
+        stroke="url(#logoEmblemGrad)" 
+        stroke-width="24" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+
+  <!-- Calendar Top Binder Clips -->
+  <line x1="212" y1="124" x2="212" y2="178" 
+        stroke="url(#logoEmblemGrad)" stroke-width="22" stroke-linecap="round"/>
+  <line x1="300" y1="124" x2="300" y2="178" 
+        stroke="url(#logoEmblemGrad)" stroke-width="22" stroke-linecap="round"/>
+
+  <!-- Calendar Horizontal Divider Line -->
+  <line x1="164" y1="210" x2="348" y2="210" 
+        stroke="url(#logoEmblemGrad)" stroke-width="20" stroke-linecap="round"/>
+
+  <!-- Checkmark Inside Calendar -->
+  <path d="M 208 274 L 246 312 L 306 244" 
+        fill="none" 
+        stroke="url(#logoEmblemGrad)" 
+        stroke-width="26" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+
+  <!-- "SJob" Typography -->
+  <text x="256" y="575" 
+        text-anchor="middle" 
+        fill="#ffffff" 
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-weight="800" 
+        font-size="94" 
+        letter-spacing="-2px">SJob</text>
+</svg>
