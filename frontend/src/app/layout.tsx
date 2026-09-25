@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import { JobProvider } from '../context/JobContext';
 import { ServiceWorkerRegister } from '../components/ServiceWorkerRegister';
@@ -41,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body>
+        <Script src="https://accounts.google.com/gsi/client" strategy="afterInteractive" />
         <JobProvider>
           <ServiceWorkerRegister />
           <div className="viewport-wrapper">

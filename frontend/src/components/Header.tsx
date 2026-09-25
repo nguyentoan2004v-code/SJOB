@@ -5,20 +5,11 @@ import { useJobs } from '../context/JobContext';
 import { ShieldCheck, LogOut, Cloud, Sparkles } from 'lucide-react';
 
 export const Header: React.FC = () => {
-  const { user, isGuest, logout, loginWithGoogle, setActiveTab } = useJobs();
+  const { user, isGuest, logout, openGoogleModal, setActiveTab } = useJobs();
   const [isAuthMenuOpen, setIsAuthMenuOpen] = useState(false);
 
   const handleGoogleClick = () => {
-    const fakeGooglePayload = {
-      email: 'freelancer.pro@gmail.com',
-      sub: 'google_1029384756',
-      name: 'Freelancer Pro',
-      picture: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces',
-    };
-    const mockJwt = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.${btoa(
-      JSON.stringify(fakeGooglePayload)
-    )}.mocksignature`;
-    loginWithGoogle(mockJwt);
+    openGoogleModal();
   };
 
   return (

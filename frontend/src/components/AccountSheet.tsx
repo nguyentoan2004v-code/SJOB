@@ -22,7 +22,7 @@ interface AccountSheetProps {
 }
 
 export const AccountSheet: React.FC<AccountSheetProps> = ({ isOpen, onClose }) => {
-  const { user, isGuest, logout, loginWithGoogle, allJobs } = useJobs();
+  const { user, isGuest, logout, openGoogleModal, allJobs } = useJobs();
   const [guestName, setGuestName] = useState<string>('Freelancer');
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
   const [nameInput, setNameInput] = useState<string>('');
@@ -77,18 +77,8 @@ export const AccountSheet: React.FC<AccountSheetProps> = ({ isOpen, onClose }) =
   };
 
   const handleGoogleClick = () => {
-    const fakeGooglePayload = {
-      email: 'freelancer.pro@gmail.com',
-      sub: 'google_1029384756',
-      name: guestName || 'Freelancer Pro',
-      picture:
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces',
-    };
-    const mockJwt = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.${btoa(
-      JSON.stringify(fakeGooglePayload)
-    )}.mocksignature`;
-    loginWithGoogle(mockJwt);
     onClose();
+    openGoogleModal();
   };
 
   const totalEarnings = allJobs.reduce((sum, j) => sum + (Number(j.cost) || 0), 0);

@@ -435,11 +435,15 @@ npm run dev:frontend
       + Bổ sung `vitest` vào `devDependencies` của [frontend/package.json](file:///d:/SJob/frontend/package.json).
       + Xác thực build và toàn bộ 27/27 bài test chạy thành công 100%.
     - Files thay đổi: `frontend/tsconfig.json`, `frontend/package.json`, `SKILL.md`.
-  - Triển Khai Frontend Next.js PWA Lên Vercel Thành Công (Status Ready):
-    - Ứng dụng PWA đã hoạt động chính thức tại: `https://sjob-frontend.vercel.app`.
-    - Kết nối với Backend NestJS API tại `https://sjob-api.onrender.com/api`.
-    - Đã xác thực tải trang trực tiếp thành công với đầy đủ PWA manifest, service worker và thương hiệu SJob.
-    - Dự án hoàn tất triển khai môi trường thực tế 100% Miễn phí (0 VNĐ/tháng).
+  - Tích Hợp Google Sign-In Chính Thức (Google Identity Services):
+    - Khởi tạo và liên kết Google OAuth 2.0 Client ID: `257067138162-fnaf04q43i1gqcdg5nk833g907ep2t2m.apps.googleusercontent.com`.
+    - Nhúng Google Identity Services SDK (`https://accounts.google.com/gsi/client`) vào `frontend/src/app/layout.tsx`.
+    - Xây dựng component `GoogleAuthModal.tsx` hiển thị giao diện đăng nhập Google Cloud sang trọng, render nút Google chính thức và kích hoạt Google One Tap.
+    - Cập nhật `Header.tsx` và `AccountSheet.tsx` mở GoogleAuthModal thay cho luồng mock cũ.
+    - Cấu hình Backend `AuthService` xác thực token với audience Google Client ID chính thức.
+    - Build thành công 100% không có lỗi.
+    - Files thay đổi: `backend/src/auth/auth.service.ts`, `frontend/src/app/layout.tsx`, `frontend/src/app/page.tsx`, `frontend/src/app/globals.css`, `frontend/src/components/GoogleAuthModal.tsx`, `frontend/src/components/Header.tsx`, `frontend/src/components/AccountSheet.tsx`, `frontend/src/context/JobContext.tsx`, `SKILL.md`.
+
 
 
 

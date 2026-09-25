@@ -79,6 +79,9 @@ export class AuthService {
     try {
       const ticket = await googleClient.verifyIdToken({
         idToken: dto.credential,
+        audience:
+          process.env.GOOGLE_CLIENT_ID ||
+          '257067138162-fnaf04q43i1gqcdg5nk833g907ep2t2m.apps.googleusercontent.com',
       });
       payload = ticket.getPayload();
     } catch {

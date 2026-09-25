@@ -9,6 +9,7 @@ import { AccountPage } from '../components/AccountPage';
 import { BottomNav } from '../components/BottomNav';
 import { JobFormSheet } from '../components/JobFormSheet';
 import { SyncPromptModal } from '../components/SyncPromptModal';
+import { GoogleAuthModal } from '../components/GoogleAuthModal';
 import { PWAInstallBanner } from '../components/PWAInstallBanner';
 
 export default function Home() {
@@ -30,6 +31,7 @@ export default function Home() {
       <BottomNav />
       <JobFormSheet />
       <SyncPromptModal />
+      <GoogleAuthModal />
     </>
   );
 }

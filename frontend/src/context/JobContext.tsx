@@ -43,6 +43,9 @@ interface JobContextType {
     excludeJobId?: string | number
   ) => Promise<OverlapCheckResult>;
   loginWithGoogle: (credential: string) => Promise<void>;
+  isGoogleModalOpen: boolean;
+  openGoogleModal: () => void;
+  closeGoogleModal: () => void;
   confirmSyncGuestJobs: () => Promise<void>;
   skipSyncGuestJobs: () => void;
   logout: () => void;
@@ -74,6 +77,11 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Sync Modal state
   const [isSyncModalOpen, setIsSyncModalOpen] = useState<boolean>(false);
   const [guestJobsToSyncCount, setGuestJobsToSyncCount] = useState<number>(0);
+
+  // Google Auth Modal state
+  const [isGoogleModalOpen, setIsGoogleModalOpen] = useState<boolean>(false);
+  const openGoogleModal = () => setIsGoogleModalOpen(true);
+  const closeGoogleModal = () => setIsGoogleModalOpen(false);
 
   const isGuest = !user;
 
@@ -203,6 +211,7 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const res = await api.googleLogin(credential);
       setAuthSession(res.accessToken, res.user);
       setUser(res.user);
+      setIsGoogleModalOpen(false);
 
       // Check if there are existing guest jobs
       const existingGuest = getGuestJobs();
@@ -273,6 +282,9 @@ export const JobProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         deleteJob,
         checkOverlap,
         loginWithGoogle,
+        isGoogleModalOpen,
+        openGoogleModal,
+        closeGoogleModal,
         confirmSyncGuestJobs,
         skipSyncGuestJobs,
         logout,
