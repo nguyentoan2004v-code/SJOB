@@ -1,19 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useJobs } from '../context/JobContext';
 import { ShieldCheck, LogOut, Cloud, Sparkles } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const { user, isGuest, logout, openGoogleModal, setActiveTab } = useJobs();
   const [isAuthMenuOpen, setIsAuthMenuOpen] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isStandalonePWA =
+        window.matchMedia('(display-mode: standalone)').matches ||
+        (window.navigator as any).standalone === true ||
+        document.referrer.includes('android-app://');
+      setIsStandalone(isStandalonePWA);
+    }
+  }, []);
 
   const handleGoogleClick = () => {
     openGoogleModal();
   };
 
   return (
-    <header className="app-header">
+    <header className={`app-header ${isStandalone ? 'standalone-header' : ''}`}>
       <div
         className="logo-group"
         onClick={() => setActiveTab('calendar')}

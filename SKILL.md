@@ -449,6 +449,14 @@ npm run dev:frontend
       + Sử dụng cơ chế nạp động Google GSI Script an toàn vào `document.head` trong [GoogleAuthModal.tsx](file:///d:/SJob/frontend/src/components/GoogleAuthModal.tsx).
       + Sử dụng `useRef` cho container nút Google với cấu trúc rỗng hoàn toàn, không có React children để React không can thiệp vào iframe của Google.
     - Files thay đổi: `frontend/src/app/layout.tsx`, `frontend/src/components/GoogleAuthModal.tsx`, `SKILL.md`.
+  - Tối Ưu Safe-Area & Đẩy Lùi Header Tránh Bị Che Trên Ứng Dụng Di Động PWA:
+    - **Vấn đề**: Khi cài đặt PWA ra màn hình chính điện thoại (Standalone mode), phần Header bị thanh trạng thái (đồng hồ, biểu tượng pin, sóng) và camera nốt ruồi / notch đè lên trực tiếp.
+    - **Khắc phục**:
+      + Thêm cơ chế nhận diện tự động chế độ Standalone PWA (`(display-mode: standalone)` và `window.navigator.standalone`) trong [Header.tsx](file:///d:/SJob/frontend/src/components/Header.tsx).
+      + Cập nhật [globals.css](file:///d:/SJob/frontend/src/app/globals.css) bổ sung `padding-top: max(48px, calc(14px + env(safe-area-inset-top, 36px)))` cho `.app-header.standalone-header` và `@media (display-mode: standalone)`.
+      + Đồng thời bổ sung `padding-bottom` và an toàn cho thanh điều hướng đáy `.bottom-nav` và nút nổi `.fab-btn` tránh bị thanh điều hướng ảo/home indicator của điện thoại che mất.
+    - Files thay đổi: `frontend/src/app/globals.css`, `frontend/src/components/Header.tsx`, `SKILL.md`.
+
 
 
 
