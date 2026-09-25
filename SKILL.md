@@ -402,6 +402,18 @@ npm run dev:frontend
       + Cập nhật lệnh build trong [render.yaml](file:///d:/SJob/render.yaml) thêm cờ `--include=dev`.
       + Đã commit và push bản sửa lỗi lên GitHub branch `main`.
     - Files thay đổi: `backend/package.json`, `package.json`, `render.yaml`, `SKILL.md`.
+  - Khắc Phục Lỗi TypeScript Khi Build Trên Môi Trường Production Render:
+    - **Nguyên nhân**:
+      + Thiếu các type definition cho `bcrypt` và `passport-jwt` do nằm trong `devDependencies`.
+      + `tsconfig.build.json` kế thừa `vitest/globals` từ `tsconfig.json`.
+      + `src/main.ts` thiếu định nghĩa kiểu tường minh cho callback CORS (`origin`, `callback`).
+    - **Khắc phục**:
+      + Chuyển `@types/node`, `@types/bcrypt`, `@types/passport-jwt`, `@types/express` sang `dependencies` trong [backend/package.json](file:///d:/SJob/backend/package.json).
+      + Khai báo kiểu chặt chẽ cho middleware CORS trong [backend/src/main.ts](file:///d:/SJob/backend/src/main.ts).
+      + Cấu hình [backend/tsconfig.build.json](file:///d:/SJob/backend/tsconfig.build.json) chỉ nạp kiểu `["node"]` và `skipLibCheck: true`.
+      + Đã kiểm tra build thành công và đẩy commit mới lên GitHub `main`.
+    - Files thay đổi: `backend/src/main.ts`, `backend/tsconfig.build.json`, `backend/package.json`, `SKILL.md`.
+
 
 
 
