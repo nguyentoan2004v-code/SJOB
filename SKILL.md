@@ -423,6 +423,14 @@ npm run dev:frontend
     - Dịch vụ Web Service `sjob-api` đã hoạt động chính thức tại: `https://sjob-api.onrender.com`.
     - Kết nối Cloud MySQL TiDB Serverless ổn định qua cổng SSL 4000.
     - Đã xác thực thành công các endpoint API hoạt động chuẩn xác với JSON response và CORS.
+  - Sửa Lỗi Build Frontend Trên Vercel (Cannot find module 'vitest'):
+    - **Nguyên nhân**: Khi Vercel build dự án từ thư mục con `frontend`, TypeScript typecheck kiểm tra cả các file `*.spec.ts` mà `vitest` không nằm trong `dependencies` của frontend.
+    - **Khắc phục**:
+      + Thêm `**/*.spec.ts`, `**/*.spec.tsx`, `**/*.test.ts`, `**/*.test.tsx` vào mục `exclude` trong [frontend/tsconfig.json](file:///d:/SJob/frontend/tsconfig.json) để Next.js bỏ qua file test khi build production.
+      + Bổ sung `vitest` vào `devDependencies` của [frontend/package.json](file:///d:/SJob/frontend/package.json).
+      + Xác thực build và toàn bộ 27/27 bài test chạy thành công 100%.
+    - Files thay đổi: `frontend/tsconfig.json`, `frontend/package.json`, `SKILL.md`.
+
 
 
 
