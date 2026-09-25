@@ -394,6 +394,15 @@ npm run dev:frontend
     - **Tài liệu Kế hoạch Triển khai Chi tiết**:
       + Xây dựng tài liệu chi tiết quy trình 5 bước đưa SJob lên môi trường thực tế hoàn toàn miễn phí (Vercel cho Frontend PWA, Render.com cho Backend NestJS API, TiDB Serverless cho Cloud MySQL 8 với 25GB lưu trữ trọn đời).
     - Files thay đổi: `backend/src/main.ts`, `backend/Dockerfile`, `render.yaml`, `.dockerignore`, `SKILL.md`. Build frontend + backend thành công 100%.
+  - Sửa Lỗi Triển Khai Render.com (Fix Render Build Code 127 nest: not found):
+    - **Nguyên nhân**: Khi biến môi trường `NODE_ENV=production` được bật trên Render, `npm install` mặc định tự động bỏ qua `devDependencies` (`--omit=dev`), khiến gói `@nestjs/cli` không được cài đặt và lệnh `nest build` báo lỗi `sh: 1: nest: not found`.
+    - **Khắc phục**:
+      + Chuyển `@nestjs/cli` từ `devDependencies` sang `dependencies` trong [backend/package.json](file:///d:/SJob/backend/package.json).
+      + Chuyển `prisma` từ `devDependencies` sang `dependencies` trong [package.json](file:///d:/SJob/package.json) gốc.
+      + Cập nhật lệnh build trong [render.yaml](file:///d:/SJob/render.yaml) thêm cờ `--include=dev`.
+      + Đã commit và push bản sửa lỗi lên GitHub branch `main`.
+    - Files thay đổi: `backend/package.json`, `package.json`, `render.yaml`, `SKILL.md`.
+
 
 
 
